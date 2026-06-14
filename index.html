@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultivar o Amanhã | Agricultura Sustentável</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Variáveis de cor - Tons terrosos e naturais, fugindo do verde neon de IA */
+        :root {
+            --bg-color: #fcfbfa;
+            --text-main: #2b2927;
+            --text-muted: #64615d;
+            --primary: #36533d; /* Verde floresta fechado */
+            --primary-light: #e8ebe4;
+            --accent: #bc6c25; /* Tom de terra/castanho para destaques */
+            --border: #e6e3df;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Cabeçalho e Navegação */
+        header {
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background-color: rgba(252, 251, 250, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Seção Hero (Introdução) */
+        .hero {
+            max-width: 800px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            line-height: 1.2;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* Layout de Conteúdo Geral */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .grid-two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-two-columns {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .hero h1 { font-size: 2.2rem; }
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        /* Estilização do Gráfico */
+        .chart-wrapper {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        /* Seção de Soluções (Cards Conectados) */
+        .solutions-section {
+            background-color: var(--primary-light);
+            padding: 5rem 2rem;
+            border-radius: 24px;
+            margin-bottom: 6rem;
+        }
+
+        .solutions-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .solution-card {
+            background: #ffffff;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .solution-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        /* Rodapé */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.6rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover {
+            background-color: #a05a1e;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">cultivar.</a>
+            <nav class="nav-links">
+                <a href="#o-problema">O Cenário</a>
+                <a href="#dados">Indicadores</a>
+                <a href="#solucoes">Caminhos</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Equilibrar a terra é o nosso maior cultivo.</h1>
+        <p>A produção de alimentos precisa caminhar junto com a regeneração do planeta. Descubra como a agricultura sustentável transforma a nossa relação com o solo.</p>
+    </section>
+
+    <main class="container">
+
+        <section id="o-problema" class="grid-two-columns">
+            <div>
+                <h2>O grande desafio da nossa era</h2>
+                <p>A agricultura convencional transformou a capacidade humana de produzir alimentos em larga escala. No entanto, o custo para o ecossistema tem se mostrado insustentável: esgotamento do solo, uso excessivo de recursos hídricos e perda severa da biodiversidade.</p>
+                <p>Encontrar o equilíbrio entre alimentar uma população global crescente e preservar a integridade dos biomas não é mais uma escolha utópica, mas uma necessidade urgente de sobrevivência estrutural.</p>
+            </div>
+            <div style="background-color: #f0ebe4; height: 300px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-style: italic; padding: 2rem; text-align: center;">
+                "Um solo saudável é um organismo vivo que pulsa e sustenta as próximas gerações."
+            </div>
+        </section>
+
+        <section id="dados" class="grid-two-columns">
+            <div class="chart-wrapper">
+                <canvas id="impactoChart"></canvas>
+            </div>
+            <div>
+                <h2>O impacto visual dos nossos recursos</h2>
+                <p>O gráfico ao lado ilustra a distribuição média do uso de recursos e impactos gerados pela atividade agrícola global quando não monitorada.</p>
+                <p>A pegada hídrica e a degradação da camada superficial do solo representam os maiores gargalos atuais. Mitigar esses números exige a substituição de práticas agressivas por metodologias regenerativas.</p>
+            </div>
+        </section>
+
+        <section id="solucoes" class="solutions-section">
+            <div class="solutions-header">
+                <h2>Como unimos as pontas?</h2>
+                <p>A resposta para a sustentabilidade no campo não está em abandonar a tecnologia, mas em usá-la para replicar a sabedoria da própria natureza.</p>
+            </div>
+
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h3>Agrofloresta & Policultivo</h3>
+                    <p>Substituir a monocultura por sistemas que misturam árvores e culturas agrícolas. Isso reconstrói o ecossistema, protege o solo do sol e atrai polinizadores naturais.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>Tecnologia de Precisão</h3>
+                    <p>Sensores conectados e drones que analisam a umidade exata do solo. Otimiza o uso de água, aplicando-a apenas onde e quando a planta realmente precisa, evitando desperdício.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>Manejo Biológico</h3>
+                    <p>Utilizar biofertilizantes e controle natural de pragas através de insetos benéficos. Reduz radicalmente a dependência de defensivos químicos pesados e restaura a microfauna da terra.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <p style="max-width: 600px; margin: 0 auto 1.5rem;">Quer entender como aplicar essas práticas em micro ou macro escala?</p>
+                <a href="https://github.com" class="cta-button">Acesse nosso Guia Prático</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Cultivar o Amanhã. Desenvolvido com foco no futuro do nosso planeta.</p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('impactoChart').getContext('2d');
+        
+        // Cores personalizadas para o gráfico combinarem com o layout do site
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Consumo de Água Doce', 'Emissão de Carbono', 'Uso de Terras', 'Outros Setores'],
+                datasets: [{
+                    label: 'Impacto Global da Agricultura (%)',
+                    data: [70, 24, 38, 15],
+                    backgroundColor: [
+                        '#36533d', // Verde principal
+                        '#bc6c25', // Accent Terra
+                        '#839788', // Verde acinzentado
+                        '#e6e3df'  // Cinza/Borda
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                family: 'Inter',
+                                size: 12
+                            },
+                            color: '#2b2927'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Pegada Ecológica Média da Atividade (%)',
+                        font: {
+                            family: 'Playfair Display',
+                            size: 16,
+                            weight: 'bold'
+                        },
+                        color: '#36533d'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
